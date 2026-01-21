@@ -54,3 +54,13 @@ This checklist is the gate for any future Phase 33 implementation. A Phase 33 im
 ## Stop Conditions
 
 - [ ] If any item above cannot be proven, Phase 33 remains **docs-only**.
+
+## Pre-Implementation Approval Gate
+
+- [ ] Explicit approval recorded
+- [ ] Module boundary defined
+- [ ] IO contract finalized
+- [ ] Failure modes documented
+- [ ] Deletion has zero runtime effect
+
+If any box is unchecked → Phase 33 code is forbidden.

@@ -155,3 +155,24 @@ It does not authorize action.
 ## Status
 
 **Charter + documentation only. No implementation is authorized.**
+
+## Conditions Required to Authorize Code
+
+Replay bias must:
+
+- be bounded
+- be time-limited
+- be non-semantic
+- be removable without runtime impact
+
+Replay bias must:
+
+- not alter Phase 30 conclusions
+- not persist without re-issuance
+- not influence Phase 31 or Phase 32
+
+Phase 33 code must:
+
+- live outside the spine
+- be manually invoked only
+- emit advisory artifacts only
