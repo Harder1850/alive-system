@@ -24,3 +24,25 @@ npm start
 ```
 
 You should see a startup line, one Body lifecycle run, then a shutdown line.
+
+## Execution Boundary
+
+This repository does not contain execution authority.
+
+Any interpretation, decision-making, or action based on observed patterns must occur
+outside this system and under explicit human or policy control.
+
+This separation is intentional and enforced.
+
+## Phase Index
+
+- **Phase 29 (complete):**  
+  Deterministic cross-domain experience accumulation with zero intelligence and zero execution.
+
+- **Phase 30 (design):**  
+  Read-only pattern detection over accumulated experiences, still without execution authority.
+
+## Intended Audience
+
+This project is intended for systems engineers, auditors, and researchers interested in
+constitutional AI boundaries and safe system architecture—not autonomous agents.
