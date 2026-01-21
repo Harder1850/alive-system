@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node run-once.js"
+    "start": "node run-once.js",
+    "chat": "node phase-36-conversation/chat.js"
   },
   "devDependencies": {
     "@types/node": "^25.0.9",
