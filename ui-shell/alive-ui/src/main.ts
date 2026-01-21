@@ -1,6 +1,7 @@
 import { Terminal } from "xterm";
 import { FitAddon } from "xterm-addon-fit";
 import "xterm/css/xterm.css";
+import { fetch } from "@tauri-apps/plugin-http";
 
 const term = new Terminal({
   cursorBlink: true,
@@ -32,9 +33,30 @@ term.onData((data) => {
     const input = buffer;
     buffer = "";
 
-    // TEMP: echo back (wire to ALIVE later)
-    term.writeln(`(sent) ${input}`);
-    term.write("> ");
+    fetch("http://127.0.0.1:7331/input", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: {
+        type: "Json",
+        payload: {
+          input,
+          source: "ui",
+          timestamp: new Date().toISOString(),
+        },
+      },
+    })
+      .then((res) => res.text())
+      .then((text) => {
+        const data = JSON.parse(text);
+        term.writeln(data.output ?? String(text));
+        term.write("> ");
+      })
+      .catch((err) => {
+        term.writeln(`[debug] ${String(err)}`);
+        console.error(err);
+        term.writeln("[error] UI bridge unavailable");
+        term.write("> ");
+      });
   } else if (data === "\u007f") {
     buffer = buffer.slice(0, -1);
   } else {
@@ -42,4 +64,3 @@ term.onData((data) => {
     term.write(data);
   }
 });
-
