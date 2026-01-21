@@ -1,5 +1,10 @@
 # alive-system (v0)
 
+## Constitutional Audit
+
+The system-wide constitutional audit is recorded in:
+`alive-core/CONSTITUTIONAL_AUDITS.md`
+
 Minimal **orchestration-only** layer for ALIVE.
 
 ## What it does
