@@ -1,0 +1,6 @@
+# Local runtime data (user-owned, not committed)
+.alive-data/
+
+# Dependencies
+node_modules/
+

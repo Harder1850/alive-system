@@ -1,7 +1,12 @@
 // alive-system/ui-bridge/server.ts
 
-import http from "http";
+import express from "express";
+import bodyParser from "body-parser";
 import { handleMemory } from "./memory.ts";
+import { routeInput } from "../phase-35-intent/intent-router.ts";
+import { summarizeLocalKnowledge } from "../phase-34-memory/query.ts";
+import { existsSync } from "fs";
+import path from "path";
 
 // ---- CONFIG ----
 const PORT = 7331;
@@ -15,80 +20,81 @@ function handleInput(text: string): string {
   return `ALIVE heard: ${text}`;
 }
 
-// ---- SERVER ----
-const server = http.createServer((req, res) => {
-  if (req.method !== "POST" || (req.url !== "/input" && req.url !== "/memory")) {
-    res.statusCode = 404;
-    return res.end();
+const app = express();
+
+// Accept JSON payloads
+app.use(bodyParser.json());
+
+// ---- /input ----
+app.post("/input", (req, res) => {
+  const parsed = req.body as any;
+
+  if (typeof parsed?.input !== "string" || parsed?.source !== "ui") {
+    res.status(400).send("Invalid payload");
+    return;
   }
 
-  let body = "";
-  req.on("data", (chunk) => (body += chunk));
-  req.on("end", () => {
-    try {
-      let parsed: any;
-      try {
-        parsed = JSON.parse(body);
-      } catch {
-        // Some clients may send JSON with extra wrapping quotes (esp. on Windows shells).
-        // Attempt one more parse pass after unwrapping.
-        const unwrapped = typeof body === "string" ? body.trim() : "";
-        if (unwrapped.startsWith('"') && unwrapped.endsWith('"')) {
-          parsed = JSON.parse(JSON.parse(unwrapped));
-        } else {
-          throw new Error("Malformed JSON");
-        }
-      }
+  const outputText = handleInput(parsed.input);
 
-      if (req.url === "/memory") {
-        const entry = handleMemory(parsed);
-        res.setHeader("Content-Type", "application/json");
-        return res.end(
-          JSON.stringify({
-            ok: true,
-            id: entry.id,
-            ts: entry.ts,
-          })
-        );
-      }
-
-      if (typeof parsed.input !== "string" || parsed.source !== "ui") {
-        res.statusCode = 400;
-        return res.end("Invalid payload");
-      }
-
-      const outputText = handleInput(parsed.input);
-
-      const response = {
-        output: outputText,
-        type: "text",
-        timestamp: new Date().toISOString(),
-      };
-
-      res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify(response));
-    } catch (err) {
-      res.statusCode = 400;
-
-      if (req.url === "/memory") {
-        res.setHeader("Content-Type", "application/json");
-        return res.end(
-          JSON.stringify({ ok: false, error: "Malformed JSON", detail: String(err) })
-        );
-      }
-
-      const response = {
-        output: "Malformed JSON",
-        type: "text",
-        timestamp: new Date().toISOString(),
-      };
-
-      res.setHeader("Content-Type", "application/json");
-      res.end(JSON.stringify(response));
-    }
+  res.json({
+    output: outputText,
+    type: "text",
+    timestamp: new Date().toISOString(),
   });
 });
 
-server.listen(PORT, () => {
+// ---- /memory ----
+app.post("/memory", (req, res) => {
+  try {
+    const entry = handleMemory(req.body as any);
+    res.json({
+      ok: true,
+      id: entry.id,
+      ts: entry.ts,
+    });
+  } catch (err) {
+    res.status(400).json({ ok: false, error: "Malformed JSON", detail: String(err) });
+  }
+});
+
+// ---- /intent ----
+app.post("/intent", (req, res) => {
+  const { input } = req.body as any;
+
+  if (typeof input !== "string") {
+    res.status(400).json({ ok: false, error: "input must be a string" });
+    return;
+  }
+
+  const result = routeInput(input);
+
+  // If this is a read-only memory query, answer locally from user-owned files.
+  if (result?.intent?.intent === "memory_query") {
+    // Guardrail: memory_query must remain local-only.
+    // - MUST NOT browse / call host-cli tools
+    // - MUST NOT write to .alive-data/library/*.md
+    // - MAY read .alive-data/library/*.md and .alive-data/memory.jsonl
+
+    const libDir = path.resolve(".alive-data", "library");
+    if (!existsSync(libDir)) {
+      console.warn("[guardrail] .alive-data/library missing; returning empty local answer");
+    }
+
+    const topic = String(result.intent.args?.topic ?? "").trim();
+    const answer = topic
+      ? summarizeLocalKnowledge(topic)
+      : "What topic should I search your local notes for?";
+
+    res.json({
+      ...result,
+      answer,
+    });
+    return;
+  }
+
+  res.json(result);
+});
+
+app.listen(PORT, () => {
   console.log(`[ui-bridge] listening on http://localhost:${PORT}`);
 });

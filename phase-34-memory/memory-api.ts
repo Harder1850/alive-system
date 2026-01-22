@@ -1,5 +1,5 @@
 import { v4 as uuid } from "uuid";
-import { readJSON, writeJSON, appendLog } from "./memory-store.ts";
+import { readJSON, writeJSON, appendLog, appendJSONL } from "./memory-store.ts";
 import type { MemoryItem, WorkingMemory } from "./memory-types.ts";
 
 export function addMemory(item: Omit<MemoryItem, "id" | "ts">) {
@@ -20,6 +20,10 @@ export function addMemory(item: Omit<MemoryItem, "id" | "ts">) {
   working.last_updated = ts;
 
   writeJSON("working.json", working);
+
+  // Append-only user-owned long-term memory log.
+  // This is separate from log.jsonl (events) and is intended to be human-readable/auditable.
+  appendJSONL("memory.jsonl", entry);
 
   return entry;
 }

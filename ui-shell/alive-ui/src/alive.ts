@@ -86,10 +86,62 @@ window.addEventListener("alive:input", (e: any) => {
     return;
   }
 
-  // Default stub response
-  window.dispatchEvent(
-    new CustomEvent("alive:output", {
-      detail: `[alive] heard: "${text}"`,
+  // Phase 35: route non-command input through the intent router
+  fetch("http://127.0.0.1:7331/intent", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ input: text }),
+  })
+    .then(async (r) => {
+      const txt = await r.text();
+      let data: any;
+      try {
+        data = JSON.parse(txt);
+      } catch {
+        throw new Error(`Non-JSON response (${r.status}): ${txt}`);
+      }
+
+      if (!r.ok || data?.ok === false) {
+        throw new Error(`HTTP ${r.status}: ${JSON.stringify(data)}`);
+      }
+
+      const intent = data.intent;
+      const msg = data.message;
+      const answer = data.answer;
+
+      if (msg) {
+        window.dispatchEvent(
+          new CustomEvent("alive:output", {
+            detail: `[intent] ${msg}`,
+          })
+        );
+      }
+
+      if (intent?.intent) {
+        window.dispatchEvent(
+          new CustomEvent("alive:output", {
+            detail: `[intent] ${intent.intent} (${intent.confidence})`,
+          })
+        );
+      }
+
+      if (answer) {
+        window.dispatchEvent(
+          new CustomEvent("alive:output", {
+            detail: `[local] ${answer}`,
+          })
+        );
+      }
     })
-  );
+    .catch((err) => {
+      const msg = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+      console.error(err);
+      window.dispatchEvent(
+        new CustomEvent("alive:output", {
+          detail: `[intent] bridge unavailable (${msg})`,
+        })
+      );
+    });
+
+  return;
 });

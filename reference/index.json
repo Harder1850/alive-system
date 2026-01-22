@@ -1,0 +1,43 @@
+{
+  "math": {
+    "fast": ["Khan Academy", "Paul's Online Math Notes"],
+    "authoritative": ["MIT OpenCourseWare"],
+    "primary": ["ISO", "NIST"],
+    "when_to_use": "Use for calculus, algebra, and definitions; prefer primary/authoritative when high stakes.",
+    "when_not_to_use": "Do not use for proofs or edge-case research under time pressure; trigger lookup_required if uncertain."
+  },
+  "probability": {
+    "fast": ["Stat Trek"],
+    "authoritative": ["MIT OpenCourseWare"],
+    "primary": ["NIST"],
+    "when_to_use": "Use for distributions, statistical definitions, and decision math; prefer NIST for reference definitions.",
+    "when_not_to_use": "Do not use to justify subjective priors; if consequences are high, require explicit lookup permission."
+  },
+  "units": {
+    "authoritative": ["NIST"],
+    "primary": ["BIPM"],
+    "calculator": ["Wolfram Alpha"],
+    "when_to_use": "Use for unit conversions, SI definitions, and invariants.",
+    "when_not_to_use": "Never invent conversions; if conversion is not already known with high confidence, request lookup to NIST/BIPM."
+  },
+  "finance": {
+    "authoritative": ["CFA Institute"],
+    "primary": ["SEC"],
+    "calculator": ["Wolfram Alpha"],
+    "when_to_use": "Use for standard financial math definitions (PV, FV, IRR) and regulatory primary sources where applicable.",
+    "when_not_to_use": "Do not treat summaries as law; for compliance/legal stakes, prefer SEC primary sources."
+  },
+  "systems": {
+    "authoritative": ["MIT OpenCourseWare"],
+    "primary": ["NIST"],
+    "when_to_use": "Use for time constants, growth models, and nonlinearity framing; prefer authoritative course materials.",
+    "when_not_to_use": "Do not rely on simplified heuristics when safety-critical; request lookup_required."
+  },
+  "emergency": {
+    "frameworks": ["CDC", "FEMA"],
+    "primary": ["WHO"],
+    "when_to_use": "Use for high-pressure decision framing and stabilizing actions.",
+    "when_not_to_use": "Do not provide medical or legal instructions; use frameworks only to guide safe next steps and request explicit lookup permission if needed."
+  }
+}
+

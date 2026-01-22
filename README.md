@@ -47,6 +47,17 @@ This separation is intentional and enforced.
 - **Phase 30 (design):**  
   Read-only pattern detection over accumulated experiences, still without execution authority.
 
+## Intuition stacks
+
+- **Science & Technology Intuition Stack:** `alive-system/science/`
+- **Governance & Human Systems Intuition Stack:** `alive-system/governance/`
+- **Cognition, Creativity, Ethics & Learning Stack:** `alive-system/cognition/`
+
+## Unified reference
+
+- Unified manifest: `alive-system/reference/manifest.md`
+- Inter-layer interface: `alive-system/reference/interface.md`
+
 ## Intended Audience
 
 This project is intended for systems engineers, auditors, and researchers interested in
