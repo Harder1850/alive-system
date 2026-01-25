@@ -1,52 +1,16 @@
-# Phase 36 — Conversational Loop (MVP)
+# Phase 36 Context Rules (Skeleton Only)
 
-This phase enables live, persistent conversation with ALIVE.
+This tells the next dev how context works, without implementing it yet.
 
-## What This Adds
+## Rules
 
-- Human-style conversational input
-- Persistent memory across sessions
-- Project-aware context
-- Deterministic responses
+- Context is temporary: Exists only during active processing.
+- Context can decay: Loses relevance over time or after use.
+- Context must be reconstructible from memory + intent: Can be rebuilt if needed.
+- Context does not equal memory: Memory is persistent, context is ephemeral.
+- Context does not equal identity: Identity is stable, context is situational.
 
-## What This Does NOT Do
-
-- No autonomy
-- No background tasks
-- No inference
-- No execution
-- No web access
-
-## How to Run
-
-```bash
-cd alive-system
-npm run chat
-```
-
-Edit `.alive-data/context.json` to change projects or focus.
-
-Deleting this folder removes all conversational ability.
-
----
-
-## ▶ HOW TO RUN (TONIGHT)
-
-From repo root:
-
-```bash
-cd alive-system
-npm run chat
-```
-
-You will see:
-
-```
-ALIVE is listening.
-ALIVE>
-```
-
-Now just talk.
+This is design law, not code.
 
 ## ✅ WHAT YOU HAVE NOW
 
