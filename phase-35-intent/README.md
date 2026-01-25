@@ -1,17 +1,36 @@
-# Phase 35 — Intent Router (Plain Language MVP)
-
-This phase adds a deterministic, rule-based intent router.
+# Phase 35 — Intent Router
 
 ## Purpose
+Translate natural language input into structured intent.
 
-Convert raw user language into a structured intent:
+Intent routing is the **bridge between language and action**.
 
-raw input → intent classification → optional clarification → routing result
+## Inputs
+- Typed text
+- (Later) voice transcription
 
-## Non-goals
+## Outputs
+Structured intent objects, e.g.:
+- query
+- remember
+- plan
+- summarize
+- reference
+- delegate
 
+## Responsibilities
+- Detect intent
+- Ask clarification when ambiguous
+- Never execute actions
+- Never mutate memory directly
+
+## Explicit Non-Responsibilities
 - No execution
-- No autonomy
-- No filesystem access
-- No background tasks
+- No planning
+- No background loops
 
+## Design Principle
+If intent is unclear:
+> Ask before acting.
+
+Silence is a failure.

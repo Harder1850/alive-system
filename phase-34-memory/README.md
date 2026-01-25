@@ -1,27 +1,36 @@
-# Phase 34 — File-Backed Memory (Working + Long-Term)
+# Phase 34 — Memory (File-Backed)
 
-This phase adds a **local, inspectable, deterministic** memory layer for Alive.
+## Purpose
+Provide deterministic, local, file-backed memory for ALIVE.
 
-## Directories
+This phase introduces:
+- Working memory
+- Append-only logs
+- Indexed references
 
-### `.alive-data/` (active memory)
+## Data Locations
+- `.alive-data/working.json` — active working memory
+- `.alive-data/log.jsonl` — append-only event log
+- `.alive-data/index.json` — pointers only
+- `.alive-archive/` — long-term references
 
-Working + short-term memory.
+## Design Rules
+- Memory is finite
+- Entries may be pruned
+- Archives are not active cognition
+- Logs are append-only
+- No background mutation
 
-- `working.json` — current working state (focus, recent ids)
-- `log.jsonl` — append-only event log (one JSON object per line)
-- `index.json` — existing index file; Phase 34 code does **not** depend on it
+## Allowed Operations
+- Add memory entries
+- Read memory entries
+- Append logs
 
-### `.alive-archive/` (long-term memory)
+## Forbidden
+- Autonomous cleanup
+- Silent mutation
+- Cross-phase writes
 
-Long-term reference library. Content is **only added when explicitly instructed**.
-
-Archive is references, not copies. Keep pointers/summaries, not bloat.
-
-## Mental model
-
-- **Working memory ≠ archive**
-- Working memory changes as your focus changes.
-- Archive persists unless you delete it yourself.
-- Alive “forgets” by losing focus, not by deleting your files.
-
+## Notes
+This phase does **not** decide relevance.
+That is handled in later phases.

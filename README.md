@@ -1,64 +1,58 @@
-# alive-system (v0)
+# ALIVE System
 
-## Constitutional Audit
+## Purpose
+`alive-system` is the **cognitive and orchestration layer** of ALIVE.
 
-The system-wide constitutional audit is recorded in:
-`alive-core/CONSTITUTIONAL_AUDITS.md`
+It is responsible for:
+- Understanding intent
+- Managing memory
+- Planning and strategy
+- Background thinking (Genesis)
+- Coordinating tools and LLMs
 
-Minimal **orchestration-only** layer for ALIVE.
+This repo **does not execute actions**.
 
-## What it does
+## Design Philosophy
+ALIVE is a **local-first orchestrator**.
 
-- Runs **exactly once** and exits.
-- Wires the sequence **Host → Body → Brain** (Brain access occurs only through the Body’s firewall/bridge).
+It does not try to:
+- Know everything
+- Store everything
+- Run a GUI constantly
+- Replace LLMs
 
-## What it does NOT do
+Instead, it:
+- Filters
+- Compresses
+- Coordinates
+- Delegates
 
-- No intelligence.
-- No autonomy.
-- No scheduling / retries / background loops.
-- No decisions.
-- No memory inspection.
+## Key Concepts
+- Memory is finite
+- Forgetting is allowed
+- Archives are references, not cognition
+- LLMs are tools, not brains
+- Most work happens off the UI thread
 
-**alive-system owns repetition (when/if it is ever added), not decisions.**
+## Implemented Phases
+- Phase 30 — Pattern Observer (read-only)
+- Phase 33 — Charter & Audit (docs only)
+- Phase 34 — File-backed working memory
+- Phase 35 — Intent routing (in progress)
 
-## Run
-
-```bash
-npm start
-```
-
-You should see a startup line, one Body lifecycle run, then a shutdown line.
+## Planned Phases
+- Phase 36 — Project context memory
+- Phase 37 — Genesis background thinking
+- Phase 38 — Voice input
 
 ## Execution Boundary
+`alive-system` **cannot**:
+- Execute system commands
+- Modify the OS
+- Act without explicit authorization
 
-This repository does not contain execution authority.
+All execution is delegated to **alive-body**.
 
-Any interpretation, decision-making, or action based on observed patterns must occur
-outside this system and under explicit human or policy control.
-
-This separation is intentional and enforced.
-
-## Phase Index
-
-- **Phase 29 (complete):**  
-  Deterministic cross-domain experience accumulation with zero intelligence and zero execution.
-
-- **Phase 30 (design):**  
-  Read-only pattern detection over accumulated experiences, still without execution authority.
-
-## Intuition stacks
-
-- **Science & Technology Intuition Stack:** `alive-system/science/`
-- **Governance & Human Systems Intuition Stack:** `alive-system/governance/`
-- **Cognition, Creativity, Ethics & Learning Stack:** `alive-system/cognition/`
-
-## Unified reference
-
-- Unified manifest: `alive-system/reference/manifest.md`
-- Inter-layer interface: `alive-system/reference/interface.md`
-
-## Intended Audience
-
-This project is intended for systems engineers, auditors, and researchers interested in
-constitutional AI boundaries and safe system architecture—not autonomous agents.
+## Canonical Audit Reference
+See:
+- `alive-core/CONSTITUTIONAL_AUDITS.md`

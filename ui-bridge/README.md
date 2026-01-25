@@ -1,57 +1,25 @@
-# UI Bridge (Phase 1.5)
+# UI Bridge
 
-This module provides a **minimal HTTP bridge** between a local UI shell
-and the ALIVE system.
+## Purpose
+Provide a **Node-based bridge** between UI and ALIVE internals.
 
-## Endpoint
+This exists to:
+- Handle filesystem safely
+- Avoid browser fs issues
+- Keep Rust untouched
 
-POST http://localhost:7331/input
+## Responsibilities
+- Accept HTTP requests from UI
+- Route to memory / intent modules
+- Persist files deterministically
 
-### Request
+## Explicit Constraints
+- No execution authority
+- No background jobs
+- No hidden state
 
-```json
-{
-  "input": "string",
-  "source": "ui",
-  "timestamp": "iso8601"
-}
-```
+## Endpoints
+- POST `/memory`
+- POST `/intent`
 
-### Response
-
-```json
-{
-  "output": "string",
-  "type": "text",
-  "timestamp": "iso8601"
-}
-```
-
-## Invariants
-
-- Text only
-- No execution
-- No scheduling
-- No background loops
-- No memory persistence
-- No authority escalation
-- Localhost only
-
-The bridge is a mail slot, not a controller.
-
-If deleted, ALIVE continues to function.
-
-## Run (dev)
-
-From `alive-system/ui-bridge`:
-
-```bash
-node server.ts
-```
-
-You should see:
-
-```
-[ui-bridge] listening on http://localhost:7331
-```
-
+This bridge is replaceable by design.
