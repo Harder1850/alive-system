@@ -10,10 +10,13 @@ No execution, no memory mutation, no tool invocation.
 
 Phase 37 defines the **Orchestration Layer** of ALIVE.
 
-Its sole responsibility is to **coordinate**, **sequence**, and **route** work across
-available capabilities in service of an approved intent, under explicit constraints.
+Its primary role is **authorization and denial**: deciding whether anything is allowed to happen at all.
 
-Phase 37 functions as a **conductor**, not a performer.
+Coordination, sequencing, and routing are subordinate to this gating function.
+
+Phase 37 functions as a **gatekeeper**, not a planner or performer.
+
+Silence, deferral, or idling are valid outcomes.
 
 ---
 
@@ -56,18 +59,37 @@ No raw user input is permitted.
 
 ---
 
+## Resource Gating (Mandatory)
+
+Orchestration **cannot occur** unless required gates pass.
+
+Gates may include:
+- **Time / Cooldowns** — throttling based on recency or frequency
+- **Cost or Token Budgets** — preventing resource exhaustion
+- **Concurrency Limits** — avoiding parallelism overload
+- **Priority Decay** — deprioritizing stale or low-value requests
+- **Explicit User Confirmation** — requiring human authorization
+
+**No gate → no orchestration.**
+
+Gates are evaluated **before** any planning, routing, or coordination occurs.
+
+---
+
 ## Outputs
 
-Phase 37 outputs **plans**, not actions.
+Phase 37 outputs are limited to the following **explicit outcomes** (enum-style):
 
-Allowed output forms include:
+- **IDLE** — no action authorized; system remains dormant
+- **DEFER** — request postponed pending gate clearance or changed conditions
+- **CLARIFY** — insufficient information; escalation to upstream phase or user required
+- **PLAN** — authorization granted; routing and sequencing instructions generated
+- **DELEGATE** — task routed to specific capability or subsystem
+- **ABORT** — request denied due to constraint violation or safety concern
 
-- Task decomposition plans
-- Routing decisions
-- Sequencing instructions
-- Parallelization strategies
-- Escalation or deferral requests
-- Abort or pause decisions
+**These are authorizations or denials, not actions.**
+
+No free-form orchestration prose is allowed beyond these named outcomes.
 
 All outputs must be:
 - Declarative
@@ -90,6 +112,19 @@ Phase 37 **must never**:
 - Persist identity or beliefs
 - Decide correctness or truth
 - Perform optimization beyond routing and sequencing
+
+**Absolute Prohibitions (Reinforced):**
+
+Phase 37 must never contain or produce:
+- Code
+- Pseudocode
+- Algorithms
+- State machines
+- Scheduling logic
+- Heuristics
+- Tool references
+
+Phase 37 remains **rules-only.**
 
 Any violation constitutes an architectural breach.
 
@@ -126,6 +161,17 @@ Phase 37 may:
 - Cross-check outputs across different systems
 
 Phase 37 must **never** trust a single model implicitly.
+
+**Critical Boundaries:**
+
+Phase 37 **may not evaluate**:
+- Correctness of outputs
+- Truth or factual accuracy
+- Quality or semantic validity
+
+Phase 37 **only routes, sequences, or escalates.**
+
+Any verification or reasoning about output content happens **outside this phase**.
 
 ---
 
@@ -178,6 +224,24 @@ Phase 37 enables:
 
 ---
 
+## Anti-Goal
+
+Phase 37 is **not intelligent, creative, or insightful.**
+
+Its function is to decide **whether intelligence should be invoked at all.**
+
+Phase 37 does not:
+- Improve plans
+- Optimize strategies
+- Generate novel solutions
+- Exhibit reasoning or judgment beyond rule enforcement
+
+**Any attempt to increase "smartness" here is a violation.**
+
+This phase is intentionally constrained to gating and routing only.
+
+---
+
 ## Implementation Notes
 
 Phase 37 is intentionally defined before execution to ensure:
@@ -197,3 +261,4 @@ Phase 37 is considered complete when:
 - execution remains external
 - constraints are enforced
 - plans are auditable and reversible
+docs(phase37): define orchestration rules and boundaries
