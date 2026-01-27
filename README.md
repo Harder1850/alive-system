@@ -34,6 +34,12 @@ Instead, it:
 - LLMs are tools, not brains
 - Most work happens off the UI thread
 
+### Note on Genesis
+
+ALIVE includes a contained cognition sandbox ("Genesis Sandbox") used for unrestricted internal thought experiments with zero authority.
+
+The historical repository "ALIVE-Genesis" is archived and not part of the live system.
+
 ## Implemented Phases
 - Phase 30 — Pattern Observer (read-only)
 - Phase 33 — Charter & Audit (docs only)
