@@ -3,5 +3,5 @@
  */
 
 export const SYSTEM_CONFIG = {
-  port: parseInt(process.env.PORT || '7070', 10)
+  port: parseInt(process.env.PORT || '8080', 10)
 };
