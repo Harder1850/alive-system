@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ES2022",
-    "moduleResolution": "Bundler",
-    "types": ["node"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "strict": true,
-    "skipLibCheck": true
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "."
   },
-  "include": [
-    "phase-34-cognitive-pipeline/**/*.ts"
-  ]
+  "include": ["runtime/**/*"]
 }

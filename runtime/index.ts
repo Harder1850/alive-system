@@ -1,0 +1,7 @@
+/**
+ * ALIVE System - Entry Point
+ */
+
+import { startServer } from './server.js';
+
+startServer();

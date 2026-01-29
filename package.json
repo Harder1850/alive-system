@@ -1,23 +1,19 @@
 {
   "name": "alive-system",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node run-once.js",
-    "chat": "node phase-36-conversation/chat.js"
-  },
-  "devDependencies": {
-    "@types/node": "^25.0.9",
-    "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "start": "node --loader ts-node/esm runtime/index.ts",
+    "start:js": "node runtime/index.js"
   },
   "dependencies": {
-    "@types/body-parser": "^1.19.6",
-    "@types/express": "^5.0.6",
-    "@types/uuid": "^10.0.0",
-    "body-parser": "^2.2.2",
-    "express": "^5.2.1",
-    "uuid": "^13.0.0"
+    "ws": "^8.15.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0",
+    "@types/ws": "^8.5.10",
+    "@types/node": "^20.0.0"
   }
 }
