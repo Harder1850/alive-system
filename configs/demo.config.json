@@ -1,0 +1,12 @@
+{
+  "system": {
+    "name": "alive-system-demo",
+    "mode": "demo"
+  },
+  "network": {
+    "wsPort": 7070
+  },
+  "logging": {
+    "level": "info"
+  }
+}
