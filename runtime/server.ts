@@ -11,7 +11,14 @@ import { assertClientRole } from './guards.js';
 import { ClientRole } from './types.js';
 
 export function startServer(): void {
-  const wss = new WebSocketServer({ port: SYSTEM_CONFIG.port });
+  const wss = new WebSocketServer({
+    port: SYSTEM_CONFIG.port,
+    host: '0.0.0.0',
+  });
+
+  wss.on('listening', () => {
+    console.log(`Server running on port ${SYSTEM_CONFIG.port}`);
+  });
 
   wss.on('connection', (socket, req) => {
     let clientRole: ClientRole | null = null;
